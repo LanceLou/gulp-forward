@@ -1,0 +1,24 @@
+{
+  "name": "gulp-forward",
+  "version": "0.0.5",
+  "description": "gulp FED test middleware，script local，data remote！",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LanceLou/gulp-forward.git"
+  },
+  "keywords": [
+    "gulp",
+    "middleware",
+    "test"
+  ],
+  "author": "LanceLou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LanceLou/gulp-forward/issues"
+  },
+  "homepage": "https://github.com/LanceLou/gulp-forward#readme"
+}
