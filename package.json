@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/LanceLou/gulp-forward/issues"
   },
-  "homepage": "https://github.com/LanceLou/gulp-forward#readme"
+  "homepage": "https://github.com/LanceLou/gulp-forward#readme",
+  "dependencies": {
+    "http-proxy": "^1.16.2"
+  }
 }
