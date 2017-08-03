@@ -1,6 +1,6 @@
 {
   "name": "gulp-forward",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "gulp FED test middleware，script local，data remote！",
   "main": "index.js",
   "scripts": {
