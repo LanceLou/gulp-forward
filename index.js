@@ -4,16 +4,6 @@
  * @version: 1.0.0
  * 
  * use with gulp-connect dev server(as middleware)
- * 
- * 只拦截，也只能拦截到127.0.0.1 host
- * 目标: 静态文件放行(走本地静态文件，如html，js，css等)
- * -> API请求 -> 需配置转发flag，即mockData还是remote API(config.proxyOpt: 1: mock, 2: remote)
- * 
- * 转发1: 走remote接口 转发2：读取本地mock文件，mock-data(规则单一哈)
- * 
- * config.remote: String
- * config.rule: Array@{}
- * config.exclude: String(排除规则，比如首页请求放行 -> 毕竟单页面，用来设置token)
  */
 
 const fs = require('fs');
