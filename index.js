@@ -18,7 +18,11 @@
 
 const fs = require('fs');
 var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({});
+const chalk = require('chalk');
+const moment = require('moment');
+const proxy = httpProxy.createProxyServer({});
+const logPreStr = `-${chalk.green('gfw')}->`;
+const log = console.log;
 
 
 /**
@@ -48,6 +52,11 @@ const gulpForward = (config) => (req, res, next) => {
   }
 };
 
+/**
+ * find the url matched rule(else return null)
+ * @param {*} rules the config rules
+ * @param {*} url the request url
+ */
 const getMatchedRule = (rules, url) => {
   let rule = null;
   rules.find((curRule) => {
@@ -59,6 +68,11 @@ const getMatchedRule = (rules, url) => {
   return rule;
 };
 
+const printLog = (from, to) => {
+  const timeStr = `[${moment().format('HH:mm:ss')}]`;
+  log(chalk.white(`${logPreStr}${chalk.gray(timeStr)} Forward from 127.0.0.1 ${chalk.hex('#05E4F3')('to')} 10:23:22:180`));
+};
+
 /**
  * remote api request forward
  * @param {*} config
@@ -67,42 +81,33 @@ const getMatchedRule = (rules, url) => {
  * @param {*} next
  */
 const remoteProxy = (config, req, res, next) => {
-  // 异常捕获
   proxy.on('error', (err, req, res) => {
     try {
       res.writeHead(500, {
         'Content-Type': 'text/plain'
       });
-
-      console.log(`error url: ${req.headers.host}/${req.url}`);
+      log(chalk.red(`${logPreStr} Error url: ${req.headers.host}/${req.url}`));
       res.end(err);
     } catch (e) {
-      clear();
-      console.log(e);
+      log(chalk.red(`${logPreStr} Error ${e}`));
     }
   });
 
   let url = req.url;
   let remoteUrl = `${config.remoteUrl}:${config.remotePort}`;
-  // 检查url是否匹配，不匹配直接放行
   const rule = getMatchedRule(config.rules, url);
-  if (rule) {
-    // 匹配剩下，返回匹配生成的matchUrl & 拼接原remote server addr 与 matchUrl
+  if (rule) { // matched: request to local
     var targetUrl = url.replace(rule.reg, rule.replace);
     req.url = targetUrl;
-    console.log(targetUrl);
     next();
-  } else {
-    // 未匹配，请求远程
+  } else { // unmatched: forward to remote
     remoteUrl += url;
-    console.log(remoteUrl);
-    console.log(url);
-    // 进行代理
+    printLog(`${req.headers.host}/${req.url}`, remoteUrl);
     proxy.web(req, res, {
       target: remoteUrl,
       prependPath: false,
-    }, (err, data) => {
-      console.log(data);
+    }, (err) => {
+      log(chalk.red(`${logPreStr} Error ${err}`));
     });
   }
 };
@@ -116,7 +121,6 @@ const remoteProxy = (config, req, res, next) => {
  */
 const mockProxy = (config ,req, res, next) => {
   let url = req.url;
-  console.log(url);
   if (config.mockReg.test(url)) {
     const curPath = `${config.mockDir}${url}`;
     let body = '';

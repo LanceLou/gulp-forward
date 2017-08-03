@@ -1,6 +1,6 @@
 {
   "name": "gulp-forward",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "gulp FED test middleware，script local，data remote！",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/LanceLou/gulp-forward#readme",
   "dependencies": {
-    "http-proxy": "^1.16.2"
+    "chalk": "^2.0.1",
+    "http-proxy": "^1.16.2",
+    "moment": "^2.18.1"
   }
 }
