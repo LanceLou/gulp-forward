@@ -111,6 +111,7 @@ const remoteProxy = (config, req, res, next) => {
  */
 const mockProxy = (config ,req, res, next) => {
   let url = req.url;
+  url = url.split('?')[0];
   if (config.mockReg.test(url)) {
     const curPath = `${config.mockDir}${url}`;
     let body = '';
